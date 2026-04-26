@@ -23,6 +23,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { generateListingFromImage } from '../services/llmService';
+import { colors } from '../theme/colors';
 import type { GeneratedListing } from '../types/models';
 
 interface ListingDraftForm {
@@ -324,14 +325,14 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
   },
   heading: {
-    color: '#091E42',
+    color: colors.ui.primary,
     fontWeight: '900',
     fontSize: 22,
   },
   subheading: {
     marginTop: 4,
     marginBottom: 14,
-    color: '#6B778C',
+    color: colors.ui.textSecondary,
     fontSize: 12,
   },
   buttonRow: {
@@ -341,15 +342,15 @@ const styles = StyleSheet.create({
   secondaryButton: {
     flex: 1,
     borderWidth: 1,
-    borderColor: '#BEC8DA',
-    backgroundColor: '#FFFFFF',
+    borderColor: colors.ui.border,
+    backgroundColor: colors.ui.surface,
     borderRadius: 9,
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 11,
   },
   secondaryButtonText: {
-    color: '#172B4D',
+    color: colors.ui.textPrimary,
     fontWeight: '700',
     fontSize: 12,
   },
@@ -357,10 +358,10 @@ const styles = StyleSheet.create({
     marginTop: 12,
     borderRadius: 12,
     overflow: 'hidden',
-    backgroundColor: '#111827',
+    backgroundColor: colors.ui.primary,
     minHeight: 240,
     borderWidth: 1,
-    borderColor: '#CBD5E1',
+    borderColor: colors.ui.border,
   },
   previewImage: {
     width: '100%',
@@ -371,26 +372,26 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
-    backgroundColor: '#E5E7EB',
+    backgroundColor: colors.ui.surfaceStrong,
   },
   emptyImageTitle: {
-    color: '#111827',
+    color: colors.ui.textPrimary,
     fontWeight: '800',
     fontSize: 17,
   },
   emptyImageText: {
-    color: '#374151',
+    color: colors.ui.textSecondary,
     textAlign: 'center',
     marginTop: 6,
     fontSize: 13,
   },
   loadingOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0,0,0,0.4)',
+    backgroundColor: 'rgba(48,70,78,0.55)',
     justifyContent: 'flex-start',
   },
   loadingText: {
-    color: '#E5E7EB',
+    color: colors.ui.onPrimary,
     marginTop: 10,
     marginLeft: 10,
     fontWeight: '700',
@@ -411,14 +412,14 @@ const styles = StyleSheet.create({
   },
   generateButton: {
     marginTop: 12,
-    backgroundColor: '#0052CC',
+    backgroundColor: colors.ui.primary,
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 13,
   },
   generateButtonText: {
-    color: '#FFFFFF',
+    color: colors.ui.onPrimary,
     fontWeight: '800',
     fontSize: 14,
   },
@@ -439,13 +440,13 @@ const styles = StyleSheet.create({
   outputCard: {
     marginTop: 14,
     borderWidth: 1,
-    borderColor: '#DBE1EB',
+    borderColor: colors.ui.border,
     borderRadius: 12,
     padding: 12,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.ui.surface,
   },
   outputHeading: {
-    color: '#0052CC',
+    color: colors.ui.secondary,
     fontWeight: '900',
     fontSize: 16,
     marginBottom: 8,
@@ -453,7 +454,7 @@ const styles = StyleSheet.create({
   outputLabel: {
     fontSize: 10,
     textTransform: 'uppercase',
-    color: '#6B7280',
+    color: colors.ui.textMuted,
     fontWeight: '700',
     marginTop: 8,
     marginBottom: 4,
