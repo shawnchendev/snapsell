@@ -1,4 +1,5 @@
 import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
+import { colors } from '../theme/colors';
 
 export const ProfileScreen = () => {
   return (
@@ -42,12 +43,12 @@ const styles = StyleSheet.create({
     paddingTop: 16,
   },
   heading: {
-    color: '#091E42',
+    color: colors.ui.primary,
     fontWeight: '900',
     fontSize: 22,
   },
   subheading: {
-    color: '#6B778C',
+    color: colors.ui.textSecondary,
     marginTop: 4,
     marginBottom: 14,
     fontSize: 12,
@@ -55,8 +56,8 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#DCE3EF',
-    backgroundColor: '#FFFFFF',
+    borderColor: colors.ui.border,
+    backgroundColor: colors.ui.surface,
     padding: 12,
     gap: 12,
   },
@@ -67,28 +68,28 @@ const styles = StyleSheet.create({
   },
   rowLabel: {
     fontSize: 13,
-    color: '#344563',
+    color: colors.ui.textSecondary,
     fontWeight: '700',
   },
   rowValue: {
     fontSize: 14,
-    color: '#172B4D',
+    color: colors.ui.primary,
     fontWeight: '900',
   },
   nativeButton: {
     marginTop: 16,
-    backgroundColor: '#111827',
+    backgroundColor: colors.ui.secondary,
     borderRadius: 10,
     paddingVertical: 13,
     alignItems: 'center',
   },
   nativeButtonText: {
-    color: '#FFFFFF',
+    color: colors.ui.onPrimary,
     fontWeight: '800',
     fontSize: 13,
   },
   hintText: {
-    color: '#6B7280',
+    color: colors.ui.textMuted,
     marginTop: 10,
     fontSize: 12,
     lineHeight: 18,
