@@ -1,14 +1,15 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../theme/colors';
 import type { MarketplaceItem } from '../types/models';
 
 interface ItemCardProps {
   item: MarketplaceItem;
+  onPress?: () => void;
 }
 
-export const ItemCard = ({ item }: ItemCardProps) => {
+export const ItemCard = ({ item, onPress }: ItemCardProps) => {
   return (
-    <View style={styles.outerCard}>
+    <Pressable style={styles.outerCard} onPress={onPress}>
       <Image source={{ uri: item.imageUrl }} style={styles.heroImage} />
 
       <View style={styles.contentShell}>
@@ -46,7 +47,7 @@ export const ItemCard = ({ item }: ItemCardProps) => {
           Seller: {item.sellerName}
         </Text>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

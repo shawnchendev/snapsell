@@ -1,3 +1,5 @@
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useMemo, useState } from 'react';
 import {
   FlatList,
@@ -10,9 +12,11 @@ import { CategoryPill } from '../components/CategoryPill';
 import { colors } from '../theme/colors';
 import { ItemCard } from '../components/ItemCard';
 import { marketplaceCategories, marketplaceItems } from '../data/mockItems';
+import type { HomeStackParamList } from '../navigation/types';
 import type { MarketplaceItem } from '../types/models';
 
 export const HomeScreen = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
   const filteredItems = useMemo((): MarketplaceItem[] => {
@@ -29,7 +33,9 @@ export const HomeScreen = () => {
         data={filteredItems}
         keyExtractor={(item) => item.id}
         numColumns={2}
-        renderItem={({ item }) => <ItemCard item={item} />}
+        renderItem={({ item }) => (
+          <ItemCard item={item} onPress={() => navigation.navigate('listingDetails', { itemId: item.id })} />
+        )}
         contentContainerStyle={styles.listContent}
         columnWrapperStyle={styles.columnWrap}
         ListHeaderComponent={
