@@ -5,7 +5,8 @@ import {
 } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { CreateListingScreen } from './src/screens/CreateListingScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { ProfileScreen } from './src/screens/ProfileScreen';
@@ -31,27 +32,15 @@ const navigationTheme: NavigationTheme = {
   },
 };
 
-const SnapSellHeaderTitle = () => {
-  return (
-    <View style={styles.headerTitleWrap}>
-      <Text style={styles.brand}>SnapSell</Text>
-      <Text style={styles.subtitle}>St. John's & surrounding areas</Text>
-    </View>
-  );
-};
-
 export default function App() {
   return (
-    <>
+    <SafeAreaProvider>
       <StatusBar style="dark" />
       <NavigationContainer theme={navigationTheme}>
         <Tab.Navigator
           initialRouteName="home"
           screenOptions={{
-            headerStyle: styles.header,
-            headerShadowVisible: false,
-            headerTitle: () => <SnapSellHeaderTitle />,
-            headerTitleAlign: 'left',
+            headerShown: false,
             tabBarStyle: styles.tabBar,
             tabBarItemStyle: styles.tabBarItem,
             tabBarLabelStyle: styles.tabBarLabel,
@@ -85,35 +74,14 @@ export default function App() {
           />
         </Tab.Navigator>
       </NavigationContainer>
-    </>
+    </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: colors.ui.surface,
-  },
-  headerTitleWrap: {
-    marginLeft: 2,
-  },
-  brand: {
-    color: colors.ui.primary,
-    fontWeight: '900',
-    fontSize: 27,
-    letterSpacing: 0.2,
-  },
-  subtitle: {
-    color: colors.ui.textSecondary,
-    fontSize: 12,
-    marginTop: 2,
-    marginLeft: 3,
-  },
   tabBar: {
-    borderTopWidth: 1,
     borderTopColor: colors.ui.border,
     backgroundColor: colors.ui.surface,
-    height: 76,
-    paddingHorizontal: 8,
     paddingTop: 10,
     paddingBottom: 12,
   },
