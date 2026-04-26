@@ -12,11 +12,11 @@ import { CategoryPill } from '../components/CategoryPill';
 import { colors } from '../theme/colors';
 import { ItemCard } from '../components/ItemCard';
 import { marketplaceCategories, marketplaceItems } from '../data/mockItems';
-import type { HomeStackParamList } from '../navigation/types';
+import type { RootStackParamList } from '../navigation/types';
 import type { MarketplaceItem } from '../types/models';
 
 export const HomeScreen = () => {
-  const navigation = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
   const filteredItems = useMemo((): MarketplaceItem[] => {

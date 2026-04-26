@@ -17,7 +17,8 @@
       "infoPlist": {
         "NSCameraUsageDescription": "SnapSell uses your camera so you can take photos of items to sell.",
         "NSPhotoLibraryUsageDescription": "SnapSell uses your photo library so you can upload item photos."
-      }
+      },
+      "bundleIdentifier": "com.anonymous.snapsell-workshop"
     },
     "android": {
       "adaptiveIcon": {
@@ -33,6 +34,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }

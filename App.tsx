@@ -1,23 +1,23 @@
 import {
   DefaultTheme,
   NavigationContainer,
-  getFocusedRouteNameFromRoute,
   type Theme as NavigationTheme,
 } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import type { RootStackParamList, RootTabParamList } from './src/navigation/types';
 import { CreateListingScreen } from './src/screens/CreateListingScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { ListingDetailsScreen } from './src/screens/ListingDetailsScreen';
 import { ProfileScreen } from './src/screens/ProfileScreen';
-import type { HomeStackParamList, RootTabParamList } from './src/navigation/types';
 import { colors } from './src/theme/colors';
 
+const RootStack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<RootTabParamList>();
-const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
 const navigationTheme: NavigationTheme = {
   ...DefaultTheme,
@@ -31,12 +31,59 @@ const navigationTheme: NavigationTheme = {
   },
 };
 
-const HomeStackNavigator = () => {
+const MainTabs = () => {
   return (
-    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
-      <HomeStack.Screen name="homeFeed" component={HomeScreen} />
-      <HomeStack.Screen name="listingDetails" component={ListingDetailsScreen} />
-    </HomeStack.Navigator>
+    <Tab.Navigator
+      initialRouteName="home"
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarStyle: styles.tabBar,
+        tabBarItemStyle: styles.tabBarItem,
+        tabBarLabelStyle: styles.tabBarLabel,
+        tabBarActiveTintColor: colors.ui.onPrimary,
+        tabBarInactiveTintColor: colors.ui.textPrimary,
+        tabBarActiveBackgroundColor: colors.ui.primary,
+        tabBarInactiveBackgroundColor: colors.ui.surfaceMuted,
+        tabBarIcon: ({ color, size, focused }) => {
+          const iconName =
+            route.name === 'home'
+              ? focused
+                ? 'home'
+                : 'home-outline'
+              : route.name === 'create'
+                ? focused
+                  ? 'add-circle'
+                  : 'add-circle-outline'
+                : focused
+                  ? 'person'
+                  : 'person-outline';
+
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+      })}
+    >
+      <Tab.Screen
+        name="home"
+        component={HomeScreen}
+        options={{
+          title: 'Marketplace',
+        }}
+      />
+      <Tab.Screen
+        name="create"
+        component={CreateListingScreen}
+        options={{
+          title: 'Create Listing',
+        }}
+      />
+      <Tab.Screen
+        name="profile"
+        component={ProfileScreen}
+        options={{
+          title: 'Profile',
+        }}
+      />
+    </Tab.Navigator>
   );
 };
 
@@ -46,48 +93,16 @@ export default function App() {
       <StatusBar style="dark" />
       <SafeAreaView style={styles.safeArea} edges={['top']}>
         <NavigationContainer theme={navigationTheme}>
-          <Tab.Navigator
-            initialRouteName="home"
-            screenOptions={{
-              headerShown: false,
-              tabBarStyle: styles.tabBar,
-              tabBarItemStyle: styles.tabBarItem,
-              tabBarLabelStyle: styles.tabBarLabel,
-              tabBarActiveTintColor: colors.ui.onPrimary,
-              tabBarInactiveTintColor: colors.ui.textPrimary,
-              tabBarActiveBackgroundColor: colors.ui.primary,
-              tabBarInactiveBackgroundColor: colors.ui.surfaceMuted,
-              tabBarIcon: () => null,
-            }}
-          >
-            <Tab.Screen
-              name="home"
-              component={HomeStackNavigator}
-              options={({ route }) => {
-                const nestedRoute = getFocusedRouteNameFromRoute(route) ?? 'homeFeed';
-                const hideTabBar = nestedRoute === 'listingDetails';
-
-                return {
-                  title: 'Marketplace',
-                  tabBarStyle: [styles.tabBar, hideTabBar && styles.tabBarHidden],
-                };
-              }}
-            />
-            <Tab.Screen
-              name="create"
-              component={CreateListingScreen}
+          <RootStack.Navigator screenOptions={{ headerShown: false }}>
+            <RootStack.Screen name="tabs" component={MainTabs} />
+            <RootStack.Screen
+              name="listingDetails"
+              component={ListingDetailsScreen}
               options={{
-                title: 'Create Listing',
+                animation: 'slide_from_right',
               }}
             />
-            <Tab.Screen
-              name="profile"
-              component={ProfileScreen}
-              options={{
-                title: 'Profile',
-              }}
-            />
-          </Tab.Navigator>
+          </RootStack.Navigator>
         </NavigationContainer>
       </SafeAreaView>
     </SafeAreaProvider>
@@ -102,17 +117,10 @@ const styles = StyleSheet.create({
   tabBar: {
     borderTopColor: colors.ui.border,
     backgroundColor: colors.ui.surface,
-    paddingTop: 10,
     paddingBottom: 12,
   },
-  tabBarHidden: {
-    display: 'none',
-  },
   tabBarItem: {
-    marginHorizontal: 4,
     borderRadius: 12,
-    borderWidth: 1,
-    borderColor: colors.ui.border,
   },
   tabBarLabel: {
     fontWeight: '700',

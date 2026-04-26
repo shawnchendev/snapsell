@@ -1,5 +1,5 @@
-export type HomeStackParamList = {
-  homeFeed: undefined;
+export type RootStackParamList = {
+  tabs: undefined;
   listingDetails: {
     itemId: string;
   };

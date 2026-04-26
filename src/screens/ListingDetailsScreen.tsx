@@ -1,10 +1,10 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { marketplaceItems } from '../data/mockItems';
-import type { HomeStackParamList } from '../navigation/types';
+import type { RootStackParamList } from '../navigation/types';
 import { colors } from '../theme/colors';
 
-type Props = NativeStackScreenProps<HomeStackParamList, 'listingDetails'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'listingDetails'>;
 
 export const ListingDetailsScreen = ({ navigation, route }: Props) => {
   const listing = marketplaceItems.find((item) => item.id === route.params.itemId);
