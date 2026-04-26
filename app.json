@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "technl-workshop",
-    "slug": "technl-workshop",
+    "name": "SnapSell Workshop",
+    "slug": "snapsell-workshop",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,7 +13,11 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "SnapSell uses your camera so you can take photos of items to sell.",
+        "NSPhotoLibraryUsageDescription": "SnapSell uses your photo library so you can upload item photos."
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -21,7 +25,11 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "CAMERA",
+        "READ_MEDIA_IMAGES"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
