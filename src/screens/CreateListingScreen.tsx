@@ -1,7 +1,6 @@
 import * as ImagePicker from 'expo-image-picker';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
-  ActivityIndicator,
   Alert,
   Image,
   Pressable,
@@ -9,6 +8,16 @@ import {
   Text,
   View,
 } from 'react-native';
+import Animated, {
+  Easing,
+  cancelAnimation,
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from 'react-native-reanimated';
 import { generateListingFromImage } from '../services/llmService';
 import type { GeneratedListing } from '../types/models';
 
@@ -17,6 +26,40 @@ export const CreateListingScreen = () => {
   const [selectedImageBase64, setSelectedImageBase64] = useState<string | null>(null);
   const [generatedListing, setGeneratedListing] = useState<GeneratedListing | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+
+  const scanProgress = useSharedValue(0);
+
+  useEffect(() => {
+    if (loading) {
+      scanProgress.value = withRepeat(
+        withSequence(
+          withTiming(1, {
+            duration: 850,
+            easing: Easing.inOut(Easing.ease),
+          }),
+          withTiming(0, {
+            duration: 850,
+            easing: Easing.inOut(Easing.ease),
+          }),
+        ),
+        -1,
+        false,
+      );
+    } else {
+      cancelAnimation(scanProgress);
+      scanProgress.value = 0;
+    }
+  }, [loading, scanProgress]);
+
+  const laserStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateY: interpolate(scanProgress.value, [0, 1], [14, 228]),
+        },
+      ],
+    };
+  });
 
   const pickFromGallery = async (): Promise<void> => {
     const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -109,8 +152,8 @@ export const CreateListingScreen = () => {
 
         {loading ? (
           <View style={styles.loadingOverlay}>
-            <ActivityIndicator size="large" color="#FFFFFF" />
-            <Text style={styles.loadingText}>Generating AI listing...</Text>
+            <Text style={styles.loadingText}>Scanning image with AI Vision...</Text>
+            <Animated.View style={[styles.scannerLaser, laserStyle]} />
           </View>
         ) : null}
       </View>
@@ -214,15 +257,28 @@ const styles = StyleSheet.create({
   },
   loadingOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    justifyContent: 'flex-start',
   },
   loadingText: {
-    color: '#FFFFFF',
-    marginTop: 12,
+    color: '#E5E7EB',
+    marginTop: 10,
+    marginLeft: 10,
     fontWeight: '700',
-    fontSize: 13,
+    fontSize: 12,
+  },
+  scannerLaser: {
+    position: 'absolute',
+    left: 8,
+    right: 8,
+    height: 3,
+    borderRadius: 10,
+    backgroundColor: '#22D3EE',
+    shadowColor: '#22D3EE',
+    shadowOpacity: 0.8,
+    shadowOffset: { width: 0, height: 0 },
+    shadowRadius: 6,
+    elevation: 4,
   },
   generateButton: {
     marginTop: 12,
