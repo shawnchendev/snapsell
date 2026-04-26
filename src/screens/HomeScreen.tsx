@@ -1,6 +1,6 @@
+import { FlashList } from '@shopify/flashlist';
 import { useMemo, useState } from 'react';
 import {
-  FlatList,
   ScrollView,
   StyleSheet,
   Text,
@@ -24,13 +24,19 @@ export const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <FlatList
+      <FlashList
         data={filteredItems}
         keyExtractor={(item) => item.id}
         numColumns={2}
-        renderItem={({ item }) => <ItemCard item={item} />}
+        estimatedItemSize={310}
+        renderItem={({ item, index }) => {
+          return (
+            <View style={[styles.itemCell, index % 2 === 0 ? styles.leftCell : styles.rightCell]}>
+              <ItemCard item={item} />
+            </View>
+          );
+        }}
         contentContainerStyle={styles.listContent}
-        columnWrapperStyle={styles.columnWrap}
         ListHeaderComponent={
           <View style={styles.headerShell}>
             <Text style={styles.heading}>Marketplace Feed</Text>
@@ -65,8 +71,14 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     paddingBottom: 30,
   },
-  columnWrap: {
-    gap: 9,
+  itemCell: {
+    flex: 1,
+  },
+  leftCell: {
+    paddingRight: 5,
+  },
+  rightCell: {
+    paddingLeft: 5,
   },
   headerShell: {
     marginBottom: 5,
