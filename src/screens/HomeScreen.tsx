@@ -7,6 +7,7 @@ import {
   View,
 } from 'react-native';
 import { CategoryPill } from '../components/CategoryPill';
+import { colors } from '../theme/colors';
 import { ItemCard } from '../components/ItemCard';
 import { marketplaceCategories, marketplaceItems } from '../data/mockItems';
 import type { MarketplaceItem } from '../types/models';
@@ -72,13 +73,13 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   heading: {
-    color: '#091E42',
+    color: colors.ui.primary,
     fontWeight: '900',
     fontSize: 22,
     marginBottom: 4,
   },
   subheading: {
-    color: '#6B778C',
+    color: colors.ui.textSecondary,
     fontSize: 12,
     marginBottom: 11,
   },

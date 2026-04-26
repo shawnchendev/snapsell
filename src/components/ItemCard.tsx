@@ -1,4 +1,5 @@
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
+import { colors } from '../theme/colors';
 import type { MarketplaceItem } from '../types/models';
 import { Box, Text } from '../theme/restyle';
 
@@ -71,7 +72,7 @@ export const ItemCard = ({ item }: ItemCardProps) => {
                 paddingVertical="xs"
                 borderWidth={1}
                 backgroundColor={blueTone ? 'chipBlueBg' : 'chipPinkBg'}
-                borderColor={blueTone ? 'brand' : 'chipPinkText'}
+                borderColor={blueTone ? 'brandDark' : 'chipPinkText'}
               >
                 <Text variant="badge" color={blueTone ? 'chipBlueText' : 'chipPinkText'}>
                   {badge}
@@ -93,6 +94,6 @@ const styles = StyleSheet.create({
   heroImage: {
     width: '100%',
     height: 145,
-    backgroundColor: '#EAEEF5',
+    backgroundColor: colors.ui.surfaceStrong,
   },
 });

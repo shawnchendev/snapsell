@@ -22,7 +22,7 @@ export const CategoryPill = ({ label, selected, onPress }: CategoryPillProps) =>
         paddingHorizontal="m"
       >
         <Text
-          color={selected ? 'card' : 'textSecondary'}
+          color={selected ? 'onPrimary' : 'textSecondary'}
           fontSize={12}
           fontWeight={selected ? '800' : '700'}
           letterSpacing={0.2}
@@ -33,4 +33,3 @@ export const CategoryPill = ({ label, selected, onPress }: CategoryPillProps) =>
     </Pressable>
   );
 };
-
