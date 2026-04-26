@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@shopify/flashlist": "npm:@shopify/flash-list@^1.8.3",
+    "@shopify/flash-list": "2.0.2",
     "@shopify/restyle": "^2.4.5",
     "babel-preset-expo": "~54.0.10",
     "expo": "~54.0.33",
