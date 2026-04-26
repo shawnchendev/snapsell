@@ -1,3 +1,4 @@
+import { ThemeProvider } from '@shopify/restyle';
 import { StatusBar } from 'expo-status-bar';
 import { useMemo, useState } from 'react';
 import {
@@ -11,6 +12,7 @@ import { CreateListingScreen } from './src/screens/CreateListingScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { ProfileScreen } from './src/screens/ProfileScreen';
 import type { AppTab } from './src/types/models';
+import { theme } from './src/theme/theme';
 
 const tabs: Array<{ label: string; value: AppTab }> = [
   { label: 'Marketplace', value: 'home' },
@@ -34,34 +36,36 @@ export default function App() {
   }, [activeTab]);
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar style="dark" />
+    <ThemeProvider theme={theme}>
+      <SafeAreaView style={styles.safeArea}>
+        <StatusBar style="dark" />
 
-      <View style={styles.topBar}>
-        <Text style={styles.brand}>SnapSell</Text>
-        <Text style={styles.subtitle}>St. John's & surrounding areas</Text>
-      </View>
+        <View style={styles.topBar}>
+          <Text style={styles.brand}>SnapSell</Text>
+          <Text style={styles.subtitle}>St. John's & surrounding areas</Text>
+        </View>
 
-      <View style={styles.screenContainer}>{activeScreen}</View>
+        <View style={styles.screenContainer}>{activeScreen}</View>
 
-      <View style={styles.tabContainer}>
-        {tabs.map((tab) => {
-          const isActive = tab.value === activeTab;
+        <View style={styles.tabContainer}>
+          {tabs.map((tab) => {
+            const isActive = tab.value === activeTab;
 
-          return (
-            <Pressable
-              key={tab.value}
-              onPress={() => setActiveTab(tab.value)}
-              style={[styles.tabButton, isActive && styles.tabButtonActive]}
-            >
-              <Text style={[styles.tabButtonText, isActive && styles.tabButtonTextActive]}>
-                {tab.label}
-              </Text>
-            </Pressable>
-          );
-        })}
-      </View>
-    </SafeAreaView>
+            return (
+              <Pressable
+                key={tab.value}
+                onPress={() => setActiveTab(tab.value)}
+                style={[styles.tabButton, isActive && styles.tabButtonActive]}
+              >
+                <Text style={[styles.tabButtonText, isActive && styles.tabButtonTextActive]}>
+                  {tab.label}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+      </SafeAreaView>
+    </ThemeProvider>
   );
 }
 
