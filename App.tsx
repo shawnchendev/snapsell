@@ -6,7 +6,7 @@ import {
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { CreateListingScreen } from './src/screens/CreateListingScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { ProfileScreen } from './src/screens/ProfileScreen';
@@ -36,8 +36,9 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <StatusBar style="dark" />
-      <NavigationContainer theme={navigationTheme}>
-        <Tab.Navigator
+      <SafeAreaView style={styles.safeArea} edges={['top']}>
+        <NavigationContainer theme={navigationTheme}>
+          <Tab.Navigator
           initialRouteName="home"
           screenOptions={{
             headerShown: false,
@@ -72,13 +73,18 @@ export default function App() {
               title: 'Profile',
             }}
           />
-        </Tab.Navigator>
-      </NavigationContainer>
+          </Tab.Navigator>
+        </NavigationContainer>
+      </SafeAreaView>
     </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: colors.ui.canvas,
+  },
   tabBar: {
     borderTopColor: colors.ui.border,
     backgroundColor: colors.ui.surface,
