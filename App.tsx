@@ -8,6 +8,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import { ListingErrorBoundary } from './src/components/ListingErrorBoundary';
 import { CreateListingScreen } from './src/screens/CreateListingScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { ProfileScreen } from './src/screens/ProfileScreen';
@@ -22,6 +23,7 @@ const tabs: Array<{ label: string; value: AppTab }> = [
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<AppTab>('home');
+  const [createFlowKey, setCreateFlowKey] = useState<number>(0);
 
   const activeScreen = useMemo(() => {
     if (activeTab === 'home') {
@@ -29,11 +31,15 @@ export default function App() {
     }
 
     if (activeTab === 'create') {
-      return <CreateListingScreen />;
+      return (
+        <ListingErrorBoundary onTryAgain={() => setCreateFlowKey((current) => current + 1)}>
+          <CreateListingScreen key={createFlowKey} />
+        </ListingErrorBoundary>
+      );
     }
 
     return <ProfileScreen />;
-  }, [activeTab]);
+  }, [activeTab, createFlowKey]);
 
   return (
     <ThemeProvider theme={theme}>

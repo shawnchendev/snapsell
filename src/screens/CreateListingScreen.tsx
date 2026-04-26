@@ -26,6 +26,7 @@ export const CreateListingScreen = () => {
   const [selectedImageBase64, setSelectedImageBase64] = useState<string | null>(null);
   const [generatedListing, setGeneratedListing] = useState<GeneratedListing | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [fatalGenerationError, setFatalGenerationError] = useState<Error | null>(null);
 
   const scanProgress = useSharedValue(0);
 
@@ -84,6 +85,7 @@ export const CreateListingScreen = () => {
     setSelectedImageUri(selectedAsset.uri);
     setSelectedImageBase64(selectedAsset.base64 ?? null);
     setGeneratedListing(null);
+    setFatalGenerationError(null);
   };
 
   const openCamera = async (): Promise<void> => {
@@ -108,6 +110,7 @@ export const CreateListingScreen = () => {
     setSelectedImageUri(selectedAsset.uri);
     setSelectedImageBase64(selectedAsset.base64 ?? null);
     setGeneratedListing(null);
+    setFatalGenerationError(null);
   };
 
   const handleGenerate = async (): Promise<void> => {
@@ -117,12 +120,21 @@ export const CreateListingScreen = () => {
     }
 
     setLoading(true);
+    setFatalGenerationError(null);
 
-    const response = await generateListingFromImage(selectedImageBase64);
-
-    setGeneratedListing(response);
-    setLoading(false);
+    try {
+      const response = await generateListingFromImage(selectedImageBase64);
+      setGeneratedListing(response);
+    } catch (error) {
+      setFatalGenerationError(error instanceof Error ? error : new Error('Unknown AI failure'));
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (fatalGenerationError) {
+    throw fatalGenerationError;
+  }
 
   return (
     <View style={styles.container}>
