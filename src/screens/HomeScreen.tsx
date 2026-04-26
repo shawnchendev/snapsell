@@ -1,4 +1,4 @@
-import { FlashList } from '@shopify/flashlist';
+import { FlashList } from '@shopify/flash-list';
 import { useMemo, useState } from 'react';
 import {
   ScrollView,
@@ -29,7 +29,6 @@ export const HomeScreen = () => {
         data={filteredItems}
         keyExtractor={(item) => item.id}
         numColumns={2}
-        estimatedItemSize={310}
         renderItem={({ item, index }) => {
           return (
             <View style={[styles.itemCell, index % 2 === 0 ? styles.leftCell : styles.rightCell]}>
