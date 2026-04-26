@@ -1,4 +1,5 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
+import { colors } from '../theme/colors';
 import type { MarketplaceItem } from '../types/models';
 
 interface ItemCardProps {
@@ -55,11 +56,11 @@ const styles = StyleSheet.create({
     borderRadius: 13,
     marginBottom: 14,
     marginHorizontal: 2,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.ui.surface,
     borderWidth: 1,
-    borderColor: '#DCE3EF',
+    borderColor: colors.ui.border,
     overflow: 'hidden',
-    shadowColor: '#091E42',
+    shadowColor: colors.ui.primary,
     shadowOpacity: 0.14,
     shadowOffset: {
       width: 0,
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
   heroImage: {
     width: '100%',
     height: 145,
-    backgroundColor: '#EAEEF5',
+    backgroundColor: colors.ui.surfaceStrong,
   },
   contentShell: {
     paddingHorizontal: 9,
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 13,
     lineHeight: 16,
-    color: '#111827',
+    color: colors.ui.textPrimary,
     fontWeight: '700',
     marginRight: 4,
   },
@@ -96,21 +97,21 @@ const styles = StyleSheet.create({
     minWidth: 33,
     height: 20,
     borderRadius: 10,
-    backgroundColor: '#FFF4DD',
+    backgroundColor: colors.status.successBg,
     borderWidth: 1,
-    borderColor: '#F6C04E',
+    borderColor: colors.status.successBorder,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 6,
     marginTop: -1,
   },
   viewsText: {
-    color: '#8A5A00',
+    color: colors.status.successText,
     fontSize: 10,
     fontWeight: '800',
   },
   priceText: {
-    color: '#FF0000',
+    color: colors.status.dangerText,
     fontSize: 21,
     fontWeight: '900',
     marginTop: 5,
@@ -123,12 +124,12 @@ const styles = StyleSheet.create({
     marginBottom: 7,
   },
   metaLabel: {
-    color: '#5E6C84',
+    color: colors.ui.textSecondary,
     fontSize: 10,
     fontWeight: '600',
   },
   separatorDot: {
-    color: '#A5ADBA',
+    color: colors.ui.textMuted,
     marginHorizontal: 5,
     fontSize: 12,
     marginTop: -1,
@@ -146,25 +147,25 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   badgeBlue: {
-    backgroundColor: '#DEEBFF',
-    borderColor: '#4C9AFF',
+    backgroundColor: colors.status.infoBg,
+    borderColor: colors.status.infoBorder,
   },
   badgePink: {
-    backgroundColor: '#FFEBE6',
-    borderColor: '#FF8F73',
+    backgroundColor: colors.status.errorBg,
+    borderColor: colors.status.errorBorder,
   },
   badgeText: {
     fontSize: 9,
     fontWeight: '700',
   },
   badgeTextBlue: {
-    color: '#0052CC',
+    color: colors.status.infoText,
   },
   badgeTextPink: {
-    color: '#BF2600',
+    color: colors.status.errorText,
   },
   sellerText: {
-    color: '#344563',
+    color: colors.ui.textSecondary,
     fontSize: 10,
     fontWeight: '600',
   },

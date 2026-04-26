@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text } from 'react-native';
+import { colors } from '../theme/colors';
 
 interface CategoryPillProps {
   label: string;
@@ -39,12 +40,12 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   selectedPillColors: {
-    backgroundColor: '#0052CC',
-    borderColor: '#003f99',
+    backgroundColor: colors.ui.secondary,
+    borderColor: colors.ui.primary,
   },
   unselectedPillColors: {
-    backgroundColor: '#FFFFFF',
-    borderColor: '#D2D8E2',
+    backgroundColor: colors.ui.surfaceMuted,
+    borderColor: colors.ui.border,
   },
   selectedSpacing: {
     paddingHorizontal: 17,
@@ -59,14 +60,14 @@ const styles = StyleSheet.create({
     letterSpacing: 0.2,
   },
   selectedTextColor: {
-    color: '#FFFFFF',
+    color: colors.ui.onPrimary,
   },
   unselectedTextColor: {
-    color: '#42526E',
+    color: colors.ui.textPrimary,
   },
   selectedTextShadowHack: {
     fontWeight: '800',
-    textShadowColor: '#0A1931',
+    textShadowColor: '#3E5A53',
     textShadowOffset: {
       width: 0,
       height: 0,

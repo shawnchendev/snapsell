@@ -11,6 +11,7 @@ import { CreateListingScreen } from './src/screens/CreateListingScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { ProfileScreen } from './src/screens/ProfileScreen';
 import type { AppTab } from './src/types/models';
+import { colors } from './src/theme/colors';
 
 const tabs: Array<{ label: string; value: AppTab }> = [
   { label: 'Marketplace', value: 'home' },
@@ -68,7 +69,7 @@ export default function App() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#F2F4F8',
+    backgroundColor: colors.ui.canvas,
     paddingTop: 10,
   },
   topBar: {
@@ -76,17 +77,17 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 8,
     borderBottomWidth: 1,
-    borderBottomColor: '#DDE2EB',
-    backgroundColor: '#FFFFFF',
+    borderBottomColor: colors.ui.border,
+    backgroundColor: colors.ui.surface,
   },
   brand: {
-    color: '#0052CC',
+    color: colors.ui.primary,
     fontWeight: '900',
     fontSize: 27,
     letterSpacing: 0.2,
   },
   subtitle: {
-    color: '#6B778C',
+    color: colors.ui.textSecondary,
     fontSize: 12,
     marginTop: 2,
     marginLeft: 3,
@@ -97,11 +98,11 @@ const styles = StyleSheet.create({
   tabContainer: {
     flexDirection: 'row',
     borderTopWidth: 1,
-    borderTopColor: '#DDE2EB',
+    borderTopColor: colors.ui.border,
     paddingHorizontal: 8,
     paddingBottom: 12,
     paddingTop: 10,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.ui.surface,
     gap: 8,
   },
   tabButton: {
@@ -110,21 +111,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#C1C7D0',
+    borderColor: colors.ui.border,
     paddingVertical: 11,
     paddingHorizontal: 6,
-    backgroundColor: '#F7F9FC',
+    backgroundColor: colors.ui.surfaceMuted,
   },
   tabButtonActive: {
-    backgroundColor: '#0052CC',
-    borderColor: '#0052CC',
+    backgroundColor: colors.ui.primary,
+    borderColor: colors.ui.primaryStrong,
   },
   tabButtonText: {
-    color: '#172B4D',
+    color: colors.ui.textPrimary,
     fontWeight: '700',
     fontSize: 12,
   },
   tabButtonTextActive: {
-    color: '#FFFFFF',
+    color: colors.ui.onPrimary,
   },
 });
