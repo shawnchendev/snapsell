@@ -6,7 +6,13 @@ export type RootStackParamList = {
   createListing: undefined;
 };
 
-export type RootTabParamList = {
+export type ClassicTabParamList = {
+  home: undefined;
+  create: undefined;
+  profile: undefined;
+};
+
+export type FloatingTabParamList = {
   home: undefined;
   saved: undefined;
   profile: undefined;
