@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   listContent: {
     paddingHorizontal: 12,
     paddingTop: 12,
-    paddingBottom: 30,
+    paddingBottom: 140,
   },
   columnWrap: {
     gap: 9,

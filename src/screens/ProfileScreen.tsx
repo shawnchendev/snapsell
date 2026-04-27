@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 14,
     paddingTop: 16,
+    paddingBottom: 140,
   },
   heading: {
     color: colors.ui.primary,

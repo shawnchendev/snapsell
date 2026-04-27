@@ -3,10 +3,11 @@ export type RootStackParamList = {
   listingDetails: {
     itemId: string;
   };
+  createListing: undefined;
 };
 
 export type RootTabParamList = {
   home: undefined;
-  create: undefined;
+  saved: undefined;
   profile: undefined;
 };

@@ -5,15 +5,16 @@ import {
 } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Ionicons from '@expo/vector-icons/Ionicons';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { FloatingTabBar } from './src/components/FloatingTabBar';
 import type { RootStackParamList, RootTabParamList } from './src/navigation/types';
 import { CreateListingScreen } from './src/screens/CreateListingScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { ListingDetailsScreen } from './src/screens/ListingDetailsScreen';
 import { ProfileScreen } from './src/screens/ProfileScreen';
+import { SavedScreen } from './src/screens/SavedScreen';
 import { colors } from './src/theme/colors';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -35,45 +36,23 @@ const MainTabs = () => {
   return (
     <Tab.Navigator
       initialRouteName="home"
-      screenOptions={({ route }) => ({
+      tabBar={(props) => <FloatingTabBar {...props} />}
+      screenOptions={{
         headerShown: false,
-        tabBarStyle: styles.tabBar,
-        tabBarItemStyle: styles.tabBarItem,
-        tabBarLabelStyle: styles.tabBarLabel,
-        tabBarActiveTintColor: colors.ui.onPrimary,
-        tabBarInactiveTintColor: colors.ui.textPrimary,
-        tabBarActiveBackgroundColor: colors.ui.primary,
-        tabBarInactiveBackgroundColor: colors.ui.surfaceMuted,
-        tabBarIcon: ({ color, size, focused }) => {
-          const iconName =
-            route.name === 'home'
-              ? focused
-                ? 'home'
-                : 'home-outline'
-              : route.name === 'create'
-                ? focused
-                  ? 'add-circle'
-                  : 'add-circle-outline'
-                : focused
-                  ? 'person'
-                  : 'person-outline';
-
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-      })}
+      }}
     >
       <Tab.Screen
         name="home"
         component={HomeScreen}
         options={{
-          title: 'Marketplace',
+          title: 'Home',
         }}
       />
       <Tab.Screen
-        name="create"
-        component={CreateListingScreen}
+        name="saved"
+        component={SavedScreen}
         options={{
-          title: 'Create Listing',
+          title: 'Saved',
         }}
       />
       <Tab.Screen
@@ -102,6 +81,13 @@ export default function App() {
                 animation: 'slide_from_right',
               }}
             />
+            <RootStack.Screen
+              name="createListing"
+              component={CreateListingScreen}
+              options={{
+                animation: 'slide_from_bottom',
+              }}
+            />
           </RootStack.Navigator>
         </NavigationContainer>
       </SafeAreaView>
@@ -113,18 +99,5 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: colors.ui.canvas,
-  },
-  tabBar: {
-    borderTopColor: colors.ui.border,
-    backgroundColor: colors.ui.surface,
-    paddingBottom: 12,
-  },
-  tabBarItem: {
-    borderRadius: 12,
-  },
-  tabBarLabel: {
-    fontWeight: '700',
-    fontSize: 12,
-    marginBottom: 6,
   },
 });
