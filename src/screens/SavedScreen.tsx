@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { FlashList } from '@shopify/flash-list';
 import { useMemo } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { ItemCard } from '../components/ItemCard';
@@ -8,7 +9,7 @@ import { marketplaceItems } from '../data/mockItems';
 import type { RootStackParamList } from '../navigation/types';
 import { colors } from '../theme/colors';
 import type { MarketplaceItem } from '../types/models';
-import { USE_RESTYLE_COMPONENTS } from '../workshop/toggles';
+import { USE_FLASHLIST_MASONRY, USE_RESTYLE_COMPONENTS } from '../workshop/toggles';
 
 export const SavedScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -19,6 +20,39 @@ export const SavedScreen = () => {
       .sort((a, b) => b.saved - a.saved)
       .slice(0, 30);
   }, []);
+
+  const header = (
+    <View style={styles.headerShell}>
+      <Text style={styles.heading}>Saved Listings</Text>
+      <Text style={styles.subheading}>
+        Your bookmarked items from around Newfoundland.
+      </Text>
+    </View>
+  );
+
+  if (USE_FLASHLIST_MASONRY) {
+    return (
+      <View style={styles.container}>
+        <FlashList
+          data={savedItems}
+          keyExtractor={(item) => item.id}
+          masonry
+          optimizeItemArrangement
+          numColumns={2}
+          renderItem={({ item, index }) => (
+            <View style={[styles.itemCell, index % 2 === 0 ? styles.leftCell : styles.rightCell]}>
+              <CardComponent
+                item={item}
+                onPress={() => navigation.navigate('listingDetails', { itemId: item.id })}
+              />
+            </View>
+          )}
+          contentContainerStyle={styles.listContent}
+          ListHeaderComponent={header}
+        />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -31,14 +65,7 @@ export const SavedScreen = () => {
         )}
         contentContainerStyle={styles.listContent}
         columnWrapperStyle={styles.columnWrap}
-        ListHeaderComponent={
-          <View style={styles.headerShell}>
-            <Text style={styles.heading}>Saved Listings</Text>
-            <Text style={styles.subheading}>
-              Your bookmarked items from around Newfoundland.
-            </Text>
-          </View>
-        }
+        ListHeaderComponent={header}
       />
     </View>
   );
@@ -55,6 +82,15 @@ const styles = StyleSheet.create({
   },
   columnWrap: {
     gap: 9,
+  },
+  itemCell: {
+    flex: 1,
+  },
+  leftCell: {
+    paddingRight: 5,
+  },
+  rightCell: {
+    paddingLeft: 5,
   },
   headerShell: {
     marginBottom: 5,

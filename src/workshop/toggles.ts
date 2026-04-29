@@ -8,3 +8,6 @@ export const USE_FLOATING_TAB_BAR = false;
 
 // false = keep legacy StyleSheet components, true = swap to Restyle components
 export const USE_RESTYLE_COMPONENTS = false;
+
+// false = keep FlatList baseline, true = use FlashList masonry layout
+export const USE_FLASHLIST_MASONRY = false;
