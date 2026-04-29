@@ -11,3 +11,6 @@ export const USE_RESTYLE_COMPONENTS = false;
 
 // false = keep FlatList baseline, true = use FlashList masonry layout
 export const USE_FLASHLIST_MASONRY = false;
+
+// false = regular image navigation, true = shared image transition into listing details
+export const USE_SHARED_IMAGE_TRANSITION = false;

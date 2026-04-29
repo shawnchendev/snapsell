@@ -1,14 +1,18 @@
+import Animated from 'react-native-reanimated';
 import { Image, Pressable, StyleSheet } from 'react-native';
 import { colors } from '../theme/colors';
 import { Box, Text } from '../theme/restyle';
 import type { MarketplaceItem } from '../types/models';
 
+const SharedTransitionImage = Animated.createAnimatedComponent(Image) as any;
+
 interface ItemCardRestyleProps {
   item: MarketplaceItem;
   onPress?: () => void;
+  sharedImageTag?: string;
 }
 
-export const ItemCardRestyle = ({ item, onPress }: ItemCardRestyleProps) => {
+export const ItemCardRestyle = ({ item, onPress, sharedImageTag }: ItemCardRestyleProps) => {
   return (
     <Pressable onPress={onPress}>
       <Box
@@ -26,7 +30,11 @@ export const ItemCardRestyle = ({ item, onPress }: ItemCardRestyleProps) => {
         shadowRadius={8}
         elevation={3}
       >
-        <Image source={{ uri: item.imageUrl }} style={styles.heroImage} />
+        <SharedTransitionImage
+          source={{ uri: item.imageUrl }}
+          style={styles.heroImage}
+          sharedTransitionTag={sharedImageTag}
+        />
 
         <Box paddingHorizontal="s" paddingTop="s" paddingBottom="s">
           <Box flexDirection="row" alignItems="flex-start" justifyContent="space-between" gap="xs">

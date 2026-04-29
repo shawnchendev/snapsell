@@ -1,16 +1,24 @@
+import Animated from 'react-native-reanimated';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../theme/colors';
 import type { MarketplaceItem } from '../types/models';
 
+const SharedTransitionImage = Animated.createAnimatedComponent(Image) as any;
+
 interface ItemCardProps {
   item: MarketplaceItem;
   onPress?: () => void;
+  sharedImageTag?: string;
 }
 
-export const ItemCard = ({ item, onPress }: ItemCardProps) => {
+export const ItemCard = ({ item, onPress, sharedImageTag }: ItemCardProps) => {
   return (
     <Pressable style={styles.outerCard} onPress={onPress}>
-      <Image source={{ uri: item.imageUrl }} style={styles.heroImage} />
+      <SharedTransitionImage
+        source={{ uri: item.imageUrl }}
+        style={styles.heroImage}
+        sharedTransitionTag={sharedImageTag}
+      />
 
       <View style={styles.contentShell}>
         <View style={styles.rowA}>

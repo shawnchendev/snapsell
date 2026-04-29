@@ -17,13 +17,21 @@ import { marketplaceCategories, marketplaceItems } from '../data/mockItems';
 import type { RootStackParamList } from '../navigation/types';
 import { colors } from '../theme/colors';
 import type { MarketplaceItem } from '../types/models';
-import { USE_FLASHLIST_MASONRY, USE_RESTYLE_COMPONENTS } from '../workshop/toggles';
+import {
+  USE_FLASHLIST_MASONRY,
+  USE_RESTYLE_COMPONENTS,
+  USE_SHARED_IMAGE_TRANSITION,
+} from '../workshop/toggles';
 
 export const HomeScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const CardComponent = USE_RESTYLE_COMPONENTS ? ItemCardRestyle : ItemCard;
   const PillComponent = USE_RESTYLE_COMPONENTS ? CategoryPillRestyle : CategoryPill;
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
+
+  const getImageTransitionTag = (itemId: string): string | undefined => {
+    return USE_SHARED_IMAGE_TRANSITION ? `listing-image-${itemId}` : undefined;
+  };
 
   const filteredItems = useMemo((): MarketplaceItem[] => {
     if (selectedCategory === 'All') {
@@ -67,6 +75,7 @@ export const HomeScreen = () => {
             <View style={[styles.itemCell, index % 2 === 0 ? styles.leftCell : styles.rightCell]}>
               <CardComponent
                 item={item}
+                sharedImageTag={getImageTransitionTag(item.id)}
                 onPress={() => navigation.navigate('listingDetails', { itemId: item.id })}
               />
             </View>
@@ -85,7 +94,11 @@ export const HomeScreen = () => {
         keyExtractor={(item) => item.id}
         numColumns={2}
         renderItem={({ item }) => (
-          <CardComponent item={item} onPress={() => navigation.navigate('listingDetails', { itemId: item.id })} />
+          <CardComponent
+            item={item}
+            sharedImageTag={getImageTransitionTag(item.id)}
+            onPress={() => navigation.navigate('listingDetails', { itemId: item.id })}
+          />
         )}
         contentContainerStyle={styles.listContent}
         columnWrapperStyle={styles.columnWrap}

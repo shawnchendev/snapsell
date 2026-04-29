@@ -1,13 +1,18 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import Animated from 'react-native-reanimated';
 import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { marketplaceItems } from '../data/mockItems';
 import type { RootStackParamList } from '../navigation/types';
 import { colors } from '../theme/colors';
+import { USE_SHARED_IMAGE_TRANSITION } from '../workshop/toggles';
+
+const SharedTransitionImage = Animated.createAnimatedComponent(Image) as any;
 
 type Props = NativeStackScreenProps<RootStackParamList, 'listingDetails'>;
 
 export const ListingDetailsScreen = ({ navigation, route }: Props) => {
   const listing = marketplaceItems.find((item) => item.id === route.params.itemId);
+  const sharedImageTag = USE_SHARED_IMAGE_TRANSITION ? `listing-image-${route.params.itemId}` : undefined;
 
   if (!listing) {
     return (
@@ -29,7 +34,11 @@ export const ListingDetailsScreen = ({ navigation, route }: Props) => {
         <Text style={styles.backButtonText}>← Back</Text>
       </Pressable>
 
-      <Image source={{ uri: listing.imageUrl }} style={styles.heroImage} />
+      <SharedTransitionImage
+        source={{ uri: listing.imageUrl }}
+        style={styles.heroImage}
+        sharedTransitionTag={sharedImageTag}
+      />
 
       <View style={styles.card}>
         <Text style={styles.title}>{listing.title}</Text>
