@@ -89,7 +89,10 @@ const buildDescription = (title: string, location: string): string => {
     .join(' ')}`;
 };
 
-const buildImage = (seed: string): string => `https://picsum.photos/seed/${seed}/1200/1200`;
+const imageAspectRatioPool = [0.72, 0.8, 0.9, 1, 1.12, 1.28, 0.66, 0.95];
+
+const buildImage = (seed: string, width: number, height: number): string =>
+  `https://picsum.photos/seed/${seed}/${width}/${height}`;
 
 const roundToNearest5 = (value: number): number => {
   return Math.max(20, Math.round(value / 5) * 5);
@@ -104,13 +107,21 @@ const generateItems = (count: number): MarketplaceItem[] => {
     const priceNoise = ((index % 11) - 5) * 9;
 
     const price = roundToNearest5(seed.basePrice + priceNoise);
+    const imageAspectRatio = imageAspectRatioPool[index % imageAspectRatioPool.length];
+    const imageWidth = 1080;
+    const imageHeight = Math.round(imageWidth / imageAspectRatio);
 
     return {
       id: `nf-item-${index + 1}`,
       title: seed.title,
       category: seed.category,
       price,
-      imageUrl: buildImage(`nf-${index + 1}-${seed.title.replace(/\s+/g, '-').toLowerCase()}`),
+      imageUrl: buildImage(
+        `nf-${index + 1}-${seed.title.replace(/\s+/g, '-').toLowerCase()}`,
+        imageWidth,
+        imageHeight,
+      ),
+      imageAspectRatio,
       description: buildDescription(seed.title, location),
       location: `${location} (${locationModifier})`,
       sellerName,

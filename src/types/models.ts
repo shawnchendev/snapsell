@@ -9,6 +9,7 @@ export interface MarketplaceItem {
   price: number;
   category: string;
   imageUrl: string;
+  imageAspectRatio: number;
   location: string;
   sellerName: string;
   condition: ItemCondition;

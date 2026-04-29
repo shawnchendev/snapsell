@@ -16,7 +16,7 @@ export const ItemCard = ({ item, onPress, sharedImageTag }: ItemCardProps) => {
     <Pressable style={styles.outerCard} onPress={onPress}>
       <SharedTransitionImage
         source={{ uri: item.imageUrl }}
-        style={styles.heroImage}
+        style={[styles.heroImage, { aspectRatio: item.imageAspectRatio }]}
         sharedTransitionTag={sharedImageTag}
       />
 
@@ -80,7 +80,6 @@ const styles = StyleSheet.create({
   },
   heroImage: {
     width: '100%',
-    height: 145,
     backgroundColor: colors.ui.surfaceStrong,
   },
   contentShell: {

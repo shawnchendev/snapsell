@@ -32,7 +32,7 @@ export const ItemCardRestyle = ({ item, onPress, sharedImageTag }: ItemCardResty
       >
         <SharedTransitionImage
           source={{ uri: item.imageUrl }}
-          style={styles.heroImage}
+          style={[styles.heroImage, { aspectRatio: item.imageAspectRatio }]}
           sharedTransitionTag={sharedImageTag}
         />
 
@@ -57,7 +57,6 @@ export const ItemCardRestyle = ({ item, onPress, sharedImageTag }: ItemCardResty
 const styles = StyleSheet.create({
   heroImage: {
     width: '100%',
-    height: 145,
     backgroundColor: colors.ui.surfaceStrong,
   },
 });
