@@ -3,13 +3,16 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useMemo } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { ItemCard } from '../components/ItemCard';
+import { ItemCardRestyle } from '../components/ItemCardRestyle';
 import { marketplaceItems } from '../data/mockItems';
 import type { RootStackParamList } from '../navigation/types';
 import { colors } from '../theme/colors';
 import type { MarketplaceItem } from '../types/models';
+import { USE_RESTYLE_COMPONENTS } from '../workshop/toggles';
 
 export const SavedScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const CardComponent = USE_RESTYLE_COMPONENTS ? ItemCardRestyle : ItemCard;
 
   const savedItems = useMemo<MarketplaceItem[]>(() => {
     return [...marketplaceItems]
@@ -24,7 +27,7 @@ export const SavedScreen = () => {
         keyExtractor={(item) => item.id}
         numColumns={2}
         renderItem={({ item }) => (
-          <ItemCard item={item} onPress={() => navigation.navigate('listingDetails', { itemId: item.id })} />
+          <CardComponent item={item} onPress={() => navigation.navigate('listingDetails', { itemId: item.id })} />
         )}
         contentContainerStyle={styles.listContent}
         columnWrapperStyle={styles.columnWrap}

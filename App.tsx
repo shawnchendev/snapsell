@@ -3,6 +3,7 @@ import {
   NavigationContainer,
   type Theme as NavigationTheme,
 } from '@react-navigation/native';
+import { ThemeProvider } from '@shopify/restyle';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -21,13 +22,8 @@ import { ListingDetailsScreen } from './src/screens/ListingDetailsScreen';
 import { ProfileScreen } from './src/screens/ProfileScreen';
 import { SavedScreen } from './src/screens/SavedScreen';
 import { colors } from './src/theme/colors';
-
-/**
- * Workshop switch:
- * - false => existing tab bar in-app (default)
- * - true  => new floating tab bar from reference screenshot
- */
-const USE_FLOATING_TAB_BAR = false;
+import { theme } from './src/theme/theme';
+import { USE_FLOATING_TAB_BAR } from './src/workshop/toggles';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 const ClassicTab = createBottomTabNavigator<ClassicTabParamList>();
@@ -141,30 +137,32 @@ const MainTabs = () => {
 
 export default function App() {
   return (
-    <SafeAreaProvider>
-      <StatusBar style="dark" />
-      <SafeAreaView style={styles.safeArea} edges={['top']}>
-        <NavigationContainer theme={navigationTheme}>
-          <RootStack.Navigator screenOptions={{ headerShown: false }}>
-            <RootStack.Screen name="tabs" component={MainTabs} />
-            <RootStack.Screen
-              name="listingDetails"
-              component={ListingDetailsScreen}
-              options={{
-                animation: 'slide_from_right',
-              }}
-            />
-            <RootStack.Screen
-              name="createListing"
-              component={CreateListingScreen}
-              options={{
-                animation: 'slide_from_bottom',
-              }}
-            />
-          </RootStack.Navigator>
-        </NavigationContainer>
-      </SafeAreaView>
-    </SafeAreaProvider>
+    <ThemeProvider theme={theme}>
+      <SafeAreaProvider>
+        <StatusBar style="dark" />
+        <SafeAreaView style={styles.safeArea} edges={['top']}>
+          <NavigationContainer theme={navigationTheme}>
+            <RootStack.Navigator screenOptions={{ headerShown: false }}>
+              <RootStack.Screen name="tabs" component={MainTabs} />
+              <RootStack.Screen
+                name="listingDetails"
+                component={ListingDetailsScreen}
+                options={{
+                  animation: 'slide_from_right',
+                }}
+              />
+              <RootStack.Screen
+                name="createListing"
+                component={CreateListingScreen}
+                options={{
+                  animation: 'slide_from_bottom',
+                }}
+              />
+            </RootStack.Navigator>
+          </NavigationContainer>
+        </SafeAreaView>
+      </SafeAreaProvider>
+    </ThemeProvider>
   );
 }
 

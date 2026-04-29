@@ -9,14 +9,19 @@ import {
   View,
 } from 'react-native';
 import { CategoryPill } from '../components/CategoryPill';
-import { colors } from '../theme/colors';
+import { CategoryPillRestyle } from '../components/CategoryPillRestyle';
 import { ItemCard } from '../components/ItemCard';
+import { ItemCardRestyle } from '../components/ItemCardRestyle';
+import { colors } from '../theme/colors';
 import { marketplaceCategories, marketplaceItems } from '../data/mockItems';
 import type { RootStackParamList } from '../navigation/types';
 import type { MarketplaceItem } from '../types/models';
+import { USE_RESTYLE_COMPONENTS } from '../workshop/toggles';
 
 export const HomeScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const CardComponent = USE_RESTYLE_COMPONENTS ? ItemCardRestyle : ItemCard;
+  const PillComponent = USE_RESTYLE_COMPONENTS ? CategoryPillRestyle : CategoryPill;
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
   const filteredItems = useMemo((): MarketplaceItem[] => {
@@ -34,7 +39,7 @@ export const HomeScreen = () => {
         keyExtractor={(item) => item.id}
         numColumns={2}
         renderItem={({ item }) => (
-          <ItemCard item={item} onPress={() => navigation.navigate('listingDetails', { itemId: item.id })} />
+          <CardComponent item={item} onPress={() => navigation.navigate('listingDetails', { itemId: item.id })} />
         )}
         contentContainerStyle={styles.listContent}
         columnWrapperStyle={styles.columnWrap}
@@ -47,7 +52,7 @@ export const HomeScreen = () => {
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <View style={styles.pillRow}>
                 {marketplaceCategories.map((category) => (
-                  <CategoryPill
+                  <PillComponent
                     key={category}
                     label={category}
                     selected={selectedCategory === category}
