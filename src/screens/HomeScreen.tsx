@@ -6,32 +6,26 @@ import {
   FlatList,
   ScrollView,
   StyleSheet,
-  Text,
-  View,
+  Text as RNText,
+  View as RNView,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { CategoryPill } from '../components/CategoryPill';
 import { CategoryPillRestyle } from '../components/CategoryPillRestyle';
 import { ItemCard } from '../components/ItemCard';
 import { ItemCardRestyle } from '../components/ItemCardRestyle';
 import { marketplaceCategories, marketplaceItems } from '../data/mockItems';
 import type { RootStackParamList } from '../navigation/types';
+import { Box, Text } from '../theme/restyle';
 import { colors } from '../theme/colors';
 import type { MarketplaceItem } from '../types/models';
-import {
-  USE_FLASHLIST_MASONRY,
-  USE_RESTYLE_COMPONENTS,
-  USE_SHARED_IMAGE_TRANSITION,
-} from '../workshop/toggles';
+import { USE_FLASHLIST_MASONRY, USE_RESTYLE_COMPONENTS } from '../workshop/toggles';
 
 export const HomeScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const CardComponent = USE_RESTYLE_COMPONENTS ? ItemCardRestyle : ItemCard;
   const PillComponent = USE_RESTYLE_COMPONENTS ? CategoryPillRestyle : CategoryPill;
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
-
-  const getImageTransitionTag = (itemId: string): string | undefined => {
-    return USE_SHARED_IMAGE_TRANSITION ? `listing-image-${itemId}` : undefined;
-  };
 
   const filteredItems = useMemo((): MarketplaceItem[] => {
     if (selectedCategory === 'All') {
@@ -41,14 +35,16 @@ export const HomeScreen = () => {
     return marketplaceItems.filter((item) => item.category === selectedCategory);
   }, [selectedCategory]);
 
-  const header = (
-    <View style={styles.headerShell}>
-      <Text style={styles.heading}>Marketplace Feed</Text>
-      <Text style={styles.subheading}>
-        100+ listings around Newfoundland. Scroll and explore local finds.
+  const header = USE_RESTYLE_COMPONENTS ? (
+    <Box marginBottom="xs" paddingHorizontal={USE_FLASHLIST_MASONRY ? 'm' : 'none'}>
+      <Text color="brandDark" fontWeight="900" fontSize={22} marginBottom="xs">
+        Marketplace Feed
+      </Text>
+      <Text color="textSecondary" fontSize={12} marginBottom="m">
+        {marketplaceItems.length}+ listings around Newfoundland. Scroll and explore local finds.
       </Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        <View style={styles.pillRow}>
+        <Box flexDirection="row" alignItems="center">
           {marketplaceCategories.map((category) => (
             <PillComponent
               key={category}
@@ -57,63 +53,87 @@ export const HomeScreen = () => {
               onPress={() => setSelectedCategory(category)}
             />
           ))}
-        </View>
+        </Box>
       </ScrollView>
-    </View>
+    </Box>
+  ) : (
+    <RNView style={[styles.headerShell, USE_FLASHLIST_MASONRY && styles.headerShellMasonry]}>
+      <RNText style={styles.heading}>Marketplace Feed</RNText>
+      <RNText style={styles.subheading}>
+        {marketplaceItems.length}+ listings around Newfoundland. Scroll and explore local finds.
+      </RNText>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        <RNView style={styles.pillRow}>
+          {marketplaceCategories.map((category) => (
+            <PillComponent
+              key={category}
+              label={category}
+              selected={selectedCategory === category}
+              onPress={() => setSelectedCategory(category)}
+            />
+          ))}
+        </RNView>
+      </ScrollView>
+    </RNView>
   );
 
   if (USE_FLASHLIST_MASONRY) {
     return (
-      <View style={styles.container}>
-        <FlashList
+      <SafeAreaView style={styles.safeArea} edges={['top']}>
+        <Box flex={1}>
+          <FlashList
           data={filteredItems}
           keyExtractor={(item) => item.id}
           masonry
           optimizeItemArrangement
           numColumns={2}
-          renderItem={({ item, index }) => (
-            <View style={[styles.itemCell, index % 2 === 0 ? styles.leftCell : styles.rightCell]}>
+          renderItem={({ item }) => (
+            <RNView style={styles.itemCell}>
               <CardComponent
                 item={item}
-                sharedImageTag={getImageTransitionTag(item.id)}
+                flush
                 onPress={() => navigation.navigate('listingDetails', { itemId: item.id })}
               />
-            </View>
+            </RNView>
           )}
-          contentContainerStyle={styles.listContent}
+          contentContainerStyle={styles.masonryListContent}
           ListHeaderComponent={header}
         />
-      </View>
+        </Box>
+      </SafeAreaView>
     );
   }
 
   return (
-    <View style={styles.container}>
-      <FlatList
+    <SafeAreaView style={styles.safeArea} edges={['top']}>
+      <Box flex={1}>
+        <FlatList
         data={filteredItems}
         keyExtractor={(item) => item.id}
         numColumns={2}
         renderItem={({ item }) => (
-          <CardComponent
-            item={item}
-            sharedImageTag={getImageTransitionTag(item.id)}
-            onPress={() => navigation.navigate('listingDetails', { itemId: item.id })}
-          />
+          <CardComponent item={item} onPress={() => navigation.navigate('listingDetails', { itemId: item.id })} />
         )}
         contentContainerStyle={styles.listContent}
         columnWrapperStyle={styles.columnWrap}
         ListHeaderComponent={header}
       />
-    </View>
+      </Box>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
+    backgroundColor: colors.ui.canvas,
   },
   listContent: {
     paddingHorizontal: 12,
+    paddingTop: 12,
+    paddingBottom: 140,
+  },
+  masonryListContent: {
     paddingTop: 12,
     paddingBottom: 140,
   },
@@ -123,14 +143,11 @@ const styles = StyleSheet.create({
   itemCell: {
     flex: 1,
   },
-  leftCell: {
-    paddingRight: 5,
-  },
-  rightCell: {
-    paddingLeft: 5,
-  },
   headerShell: {
     marginBottom: 5,
+  },
+  headerShellMasonry: {
+    paddingHorizontal: 12,
   },
   heading: {
     color: colors.ui.primary,

@@ -4,6 +4,12 @@ export type RootStackParamList = {
     itemId: string;
   };
   createListing: undefined;
+  fullMap: {
+    title: string;
+    location: string;
+    latitude: number;
+    longitude: number;
+  };
 };
 
 export type ClassicTabParamList = {

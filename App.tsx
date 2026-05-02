@@ -9,7 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { FloatingTabBar } from './src/components/FloatingTabBar';
 import type {
   ClassicTabParamList,
@@ -17,6 +17,7 @@ import type {
   RootStackParamList,
 } from './src/navigation/types';
 import { CreateListingScreen } from './src/screens/CreateListingScreen';
+import { FullMapScreen } from './src/screens/FullMapScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { ListingDetailsScreen } from './src/screens/ListingDetailsScreen';
 import { ProfileScreen } from './src/screens/ProfileScreen';
@@ -140,7 +141,6 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <SafeAreaProvider>
         <StatusBar style="dark" />
-        <SafeAreaView style={styles.safeArea} edges={['top']}>
           <NavigationContainer theme={navigationTheme}>
             <RootStack.Navigator screenOptions={{ headerShown: false }}>
               <RootStack.Screen name="tabs" component={MainTabs} />
@@ -158,19 +158,21 @@ export default function App() {
                   animation: 'slide_from_bottom',
                 }}
               />
+              <RootStack.Screen
+                name="fullMap"
+                component={FullMapScreen}
+                options={{
+                  animation: 'slide_from_bottom',
+                }}
+              />
             </RootStack.Navigator>
           </NavigationContainer>
-        </SafeAreaView>
       </SafeAreaProvider>
     </ThemeProvider>
   );
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: colors.ui.canvas,
-  },
   classicTabBar: {
     borderTopColor: colors.ui.border,
     backgroundColor: colors.ui.surface,

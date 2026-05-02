@@ -1,42 +1,106 @@
-import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Alert, Pressable, StyleSheet, Text as RNText, View as RNView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Box, Text } from '../theme/restyle';
 import { colors } from '../theme/colors';
+import { USE_RESTYLE_COMPONENTS } from '../workshop/toggles';
 
 export const ProfileScreen = () => {
+  const onDeviceToken = () =>
+    Alert.alert('Not Implemented', 'Device security token bridge will be added live.');
+
+  if (USE_RESTYLE_COMPONENTS) {
+    return (
+      <SafeAreaView style={styles.safeArea} edges={['top']}>
+        <Box flex={1} paddingHorizontal="m" paddingTop="l" paddingBottom="xxl">
+        <Text color="brandDark" fontWeight="900" fontSize={22}>
+          Your Profile
+        </Text>
+        <Text color="textSecondary" marginTop="xs" marginBottom="m" fontSize={12}>
+          Account health and seller insights for SnapSell.
+        </Text>
+
+        <Box
+          borderRadius="l"
+          borderWidth={1}
+          borderColor="border"
+          backgroundColor="card"
+          padding="m"
+          gap="m"
+        >
+          <Box flexDirection="row" alignItems="center" justifyContent="space-between">
+            <Text color="textSecondary" fontSize={13} fontWeight="700">Seller Rating</Text>
+            <Text color="brandDark" fontSize={14} fontWeight="900">4.8 ★</Text>
+          </Box>
+          <Box flexDirection="row" alignItems="center" justifyContent="space-between">
+            <Text color="textSecondary" fontSize={13} fontWeight="700">Total Listings</Text>
+            <Text color="brandDark" fontSize={14} fontWeight="900">38</Text>
+          </Box>
+          <Box flexDirection="row" alignItems="center" justifyContent="space-between">
+            <Text color="textSecondary" fontSize={13} fontWeight="700">Response Time</Text>
+            <Text color="brandDark" fontSize={14} fontWeight="900">~12 mins</Text>
+          </Box>
+        </Box>
+
+        <Pressable onPress={onDeviceToken}>
+          <Box
+            marginTop="l"
+            backgroundColor="brand"
+            borderRadius="m"
+            paddingVertical="m"
+            alignItems="center"
+          >
+            <Text color="onPrimary" fontWeight="800" fontSize={13}>
+              Get Device Security Token
+            </Text>
+          </Box>
+        </Pressable>
+
+        <Text color="textSecondary" marginTop="s" fontSize={12} lineHeight={18}>
+          Workshop note: this action is intentionally left as a placeholder for device API integration.
+        </Text>
+        </Box>
+      </SafeAreaView>
+    );
+  }
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Your Profile</Text>
-      <Text style={styles.subheading}>Account health and seller insights for SnapSell.</Text>
+    <SafeAreaView style={styles.safeArea} edges={['top']}>
+      <RNView style={styles.container}>
+      <RNText style={styles.heading}>Your Profile</RNText>
+      <RNText style={styles.subheading}>Account health and seller insights for SnapSell.</RNText>
 
-      <View style={styles.card}>
-        <View style={styles.row}>
-          <Text style={styles.rowLabel}>Seller Rating</Text>
-          <Text style={styles.rowValue}>4.8 ★</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.rowLabel}>Total Listings</Text>
-          <Text style={styles.rowValue}>38</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.rowLabel}>Response Time</Text>
-          <Text style={styles.rowValue}>~12 mins</Text>
-        </View>
-      </View>
+      <RNView style={styles.card}>
+        <RNView style={styles.row}>
+          <RNText style={styles.rowLabel}>Seller Rating</RNText>
+          <RNText style={styles.rowValue}>4.8 ★</RNText>
+        </RNView>
+        <RNView style={styles.row}>
+          <RNText style={styles.rowLabel}>Total Listings</RNText>
+          <RNText style={styles.rowValue}>38</RNText>
+        </RNView>
+        <RNView style={styles.row}>
+          <RNText style={styles.rowLabel}>Response Time</RNText>
+          <RNText style={styles.rowValue}>~12 mins</RNText>
+        </RNView>
+      </RNView>
 
-      <Pressable
-        style={styles.nativeButton}
-        onPress={() => Alert.alert('Not Implemented', 'Device security token bridge will be added live.')}
-      >
-        <Text style={styles.nativeButtonText}>Get Device Security Token</Text>
+      <Pressable style={styles.nativeButton} onPress={onDeviceToken}>
+        <RNText style={styles.nativeButtonText}>Get Device Security Token</RNText>
       </Pressable>
 
-      <Text style={styles.hintText}>
+      <RNText style={styles.hintText}>
         Workshop note: this action is intentionally left as a placeholder for device API integration.
-      </Text>
-    </View>
+      </RNText>
+      </RNView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: colors.ui.canvas,
+  },
   container: {
     flex: 1,
     paddingHorizontal: 14,
