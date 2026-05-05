@@ -9,11 +9,22 @@ import {
   Text,
   View,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { generateListingFromImage } from '../services/llmService';
 import { colors } from '../theme/colors';
 import type { GeneratedListing } from '../types/models';
+import { USE_RESTYLE_COMPONENTS } from '../workshop/toggles';
+import { CreateListingScreenModern } from './CreateListingScreenModern';
 
 export const CreateListingScreen = () => {
+  if (USE_RESTYLE_COMPONENTS) {
+    return <CreateListingScreenModern />;
+  }
+
+  return <CreateListingScreenLegacy />;
+};
+
+const CreateListingScreenLegacy = () => {
   const [selectedImageUri, setSelectedImageUri] = useState<string | null>(null);
   const [selectedImageBase64, setSelectedImageBase64] = useState<string | null>(null);
   const [generatedListing, setGeneratedListing] = useState<GeneratedListing | null>(null);
@@ -83,7 +94,8 @@ export const CreateListingScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.safeArea} edges={['top']}>
+      <View style={styles.container}>
       <Text style={styles.heading}>Create Listing</Text>
       <Text style={styles.subheading}>
         Snap a photo and let AI draft the listing details for you.
@@ -141,11 +153,16 @@ export const CreateListingScreen = () => {
           </View>
         </View>
       ) : null}
-    </View>
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: colors.ui.canvas,
+  },
   container: {
     flex: 1,
     paddingHorizontal: 14,

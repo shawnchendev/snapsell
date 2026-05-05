@@ -12,6 +12,14 @@ export type RootStackParamList = {
   };
 };
 
+export type CreateListingStackParamList = {
+  camera: undefined;
+  review: {
+    imageUri: string;
+    imageBase64: string;
+  };
+};
+
 export type ClassicTabParamList = {
   home: undefined;
   create: undefined;

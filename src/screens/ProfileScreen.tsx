@@ -5,9 +5,6 @@ import { colors } from '../theme/colors';
 import { USE_RESTYLE_COMPONENTS } from '../workshop/toggles';
 
 export const ProfileScreen = () => {
-  const onDeviceToken = () =>
-    Alert.alert('Not Implemented', 'Device security token bridge will be added live.');
-
   if (USE_RESTYLE_COMPONENTS) {
     return (
       <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -40,24 +37,6 @@ export const ProfileScreen = () => {
             <Text color="brandDark" fontSize={14} fontWeight="900">~12 mins</Text>
           </Box>
         </Box>
-
-        <Pressable onPress={onDeviceToken}>
-          <Box
-            marginTop="l"
-            backgroundColor="brand"
-            borderRadius="m"
-            paddingVertical="m"
-            alignItems="center"
-          >
-            <Text color="onPrimary" fontWeight="800" fontSize={13}>
-              Get Device Security Token
-            </Text>
-          </Box>
-        </Pressable>
-
-        <Text color="textSecondary" marginTop="s" fontSize={12} lineHeight={18}>
-          Workshop note: this action is intentionally left as a placeholder for device API integration.
-        </Text>
         </Box>
       </SafeAreaView>
     );
@@ -66,7 +45,7 @@ export const ProfileScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <RNView style={styles.container}>
-      <RNText style={styles.heading}>Your Profile</RNText>
+        <RNText style={styles.heading}>Your Profile</RNText>
       <RNText style={styles.subheading}>Account health and seller insights for SnapSell.</RNText>
 
       <RNView style={styles.card}>
@@ -83,14 +62,6 @@ export const ProfileScreen = () => {
           <RNText style={styles.rowValue}>~12 mins</RNText>
         </RNView>
       </RNView>
-
-      <Pressable style={styles.nativeButton} onPress={onDeviceToken}>
-        <RNText style={styles.nativeButtonText}>Get Device Security Token</RNText>
-      </Pressable>
-
-      <RNText style={styles.hintText}>
-        Workshop note: this action is intentionally left as a placeholder for device API integration.
-      </RNText>
       </RNView>
     </SafeAreaView>
   );

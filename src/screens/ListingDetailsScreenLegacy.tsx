@@ -1,6 +1,7 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useEffect, useState } from 'react';
 import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { marketplaceItems } from '../data/mockItems';
 import type { RootStackParamList } from '../navigation/types';
 import { isListingSaved, toggleSavedListing } from '../storage/savedListings';
@@ -56,7 +57,8 @@ export const ListingDetailsScreenLegacy = ({ navigation, route }: Props) => {
   }
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <SafeAreaView style={styles.safeArea} edges={['top']}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
         <Text style={styles.backButtonText}>← Back</Text>
       </Pressable>
@@ -124,10 +126,15 @@ export const ListingDetailsScreenLegacy = ({ navigation, route }: Props) => {
         </View>
       </View>
     </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: colors.ui.canvas,
+  },
   container: {
     flex: 1,
   },

@@ -18,5 +18,5 @@ export const USE_MODERN_LISTING_DETAILS = true;
 // false = plain heart icon toggle, true = animated heart burst effect on save
 export const USE_ANIMATED_HEART = true;
 
-// Number of marketplace items to generate (10, 50, 100, 500, 1000, etc.)
-export const LISTING_COUNT = 10;
+// Number of marketplace items to generateuse  (10, 50, 100, 500, 1000, etc.)
+export const LISTING_COUNT = 1000;
